@@ -1,19 +1,82 @@
-// @ts-check
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
-
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects the URL to contain intro.
-  await expect(page).toHaveURL(/.*intro/);
+test('test', async ({ page }) => {
+  await page.goto('https://dominos.vn/');
+  await page.getByRole('link', { name: '' }).click();
+  await page.getByRole('tab', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('0397825924');
+  await page.getByRole('textbox', { name: 'Họ' }).click();
+  await page.getByRole('dialog').click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('0987654321');
+  await page.getByRole('textbox', { name: 'Họ' }).click();
+  await page.getByText('EmailVui Lòng Nhập Email Đang').click();
+  await page.getByText('Số Điện ThoạiHọVui Lòng Nhập').click();
+  await page.getByRole('textbox', { name: 'Họ' }).click();
+  await page.getByRole('textbox', { name: 'Họ' }).fill('d');
+  await page.getByRole('textbox', { name: 'Tên' }).click();
+  await page.getByRole('textbox', { name: 'Tên' }).fill('d');
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).fill('d');
+  await page.getByText('Email Không Hợp Lệ!').click();
+  await page.getByText('Email Không Hợp Lệ!').click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('0987654326');
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).fill('cuong@gmail.com');
+  await page.getByRole('textbox', { name: 'Mật Khẩu', exact: true }).click();
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Mật Khẩu', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Mật Khẩu', exact: true }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Mật Khẩu', exact: true }).fill('C');
+  await page.getByRole('textbox', { name: 'Mật Khẩu', exact: true }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Mật Khẩu', exact: true }).fill('Createverify3)');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).click();
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).fill('C');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).fill('Createvrify3)');
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).click();
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).fill('');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).fill('C');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Xác Nhận Mật Khẩu' }).fill('Createverify3)');
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('0987654329');
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('0987654320');
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).press('ArrowLeft');
+  await page.getByRole('textbox', { name: 'Email' }).fill('cuong11@gmail.com');
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('0987654333');
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('button', { name: 'Tạo Tài Khoản' }).click();
+  await page.getByRole('button', { name: 'Quay Lại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).fill('d');
+  await page.getByRole('textbox', { name: 'Số Điện Thoại' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByText('Số Điện ThoạiSố Điện Thoại Không Tồn Tại!HọTênEmailVui Lòng Nhập Email Đang Sử').click();
+  await page.getByText('Số Điện Thoại Không Tồn Tại!').click();
 });
