@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test( 'GET session token from API', async ( { page,request} ) => {
+    test.setTimeout(60000);
     const response = await page.goto( 'https://vbee.vn')
     await response.waitForLoadState('networkidle');
     expect(response?.status()).toBe(200);
