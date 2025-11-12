@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test( 'GET session token from API', async ( { page,request} ) => {
     const response = await page.goto( 'https://vbee.vn')
+    await response.waitForLoadState('networkidle');
     expect(response?.status()).toBe(200);
     const signin = await page.getByRole('button', { name: 'Đăng nhập' }); // role='button', id='Login-button'
     await signin.waitFor({ state: 'visible', timeout: 10000 });
