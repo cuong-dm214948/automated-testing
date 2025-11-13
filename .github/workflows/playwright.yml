@@ -25,5 +25,7 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - name: Write Google credentials
+      run: echo "${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}" > scripts/credentials.json
     - name: Report results to Google Sheets
       run: node scripts/report.js
