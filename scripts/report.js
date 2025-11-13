@@ -1,40 +1,31 @@
-import { google } from "googleapis";
-import fs from "fs";
+const { google } = require("googleapis");
 
-const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-});
+async function main() {
 
-const sheets = google.sheets({ version: "v4", auth });
-
-async function appendToSheet(data) {
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: process.env.SHEET_ID,
-    range: "Sheet1!A:F",
-    valueInputOption: "USER_ENTERED",
-    requestBody: {
-      values: [data],
-    },
+  const auth = new google.auth.GoogleAuth({
+    keyFile: "../credentials.json",
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
+
+  const client = await auth.getClient();
+
+  const googleSheets = google.sheets({ version: "v4", auth: client });
+
+  const spreadsheetId = "1IVdSe8Gcal4gkLYMv-_MlVFKoiZqC73ukN6X8vFduKA";// store in .env
+
+  // Read Playwright JSON result
+  const result = JSON.parse(fs.readFileSync("result.json", "utf-8"));
+  const rows = result.tests.map(t => [t.title, t.status, t.duration]);
+
+  // Append to sheet
+  await googleSheets.spreadsheets.values.append({
+    spreadsheetId,
+    range: "Sheet1!A:C",
+    valueInputOption: "USER_ENTERED",
+    resource: { values: rows },
+  });
+
+  console.log("Test results appended to Google Sheets!");
 }
 
-// Example: read test results (Playwright JSON)
-const results = JSON.parse(fs.readFileSync("playwright-report/results.json"));
-const summary = {
-  repo: process.env.GITHUB_REPOSITORY,
-  branch: process.env.GITHUB_REF_NAME,
-  commit: process.env.GITHUB_SHA.substring(0, 7),
-  passed: results.suites[0].stats.passed,
-  failed: results.suites[0].stats.failed,
-  date: new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }),
-};
-
-appendToSheet([
-  summary.repo,
-  summary.branch,
-  summary.commit,
-  summary.passed,
-  summary.failed,
-  summary.date,
-]).then(() => console.log("Report sent to Google Sheets"));
+main().catch(console.error);
