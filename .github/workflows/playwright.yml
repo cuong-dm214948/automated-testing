@@ -1,10 +1,22 @@
+name: Playwright Tests to Google Sheets
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
@@ -14,8 +26,18 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test api.spec.js --project=chromium --reporter=json > result.json
 
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: result.json
+          retention-days: 30
+
       - name: Write Google credentials
-        run: echo "${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}" > scripts/credentials.json
+        run: |
+          mkdir -p scripts
+          echo '${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}' > scripts/credentials.json
 
       - name: Report results to Google Sheets
         run: node scripts/report.js
