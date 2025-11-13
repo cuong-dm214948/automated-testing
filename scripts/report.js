@@ -16,7 +16,7 @@ async function main() {
 
   // Read Playwright JSON result
   const result = JSON.parse(fs.readFileSync("result.json", "utf-8"));
-  console.log(resolve.json);
+  console.log(result.json);
   console.log(result);
   const rows = result.tests.map(t => [t.title, t.status, t.duration]);
 
