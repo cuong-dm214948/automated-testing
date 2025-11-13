@@ -18,7 +18,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test api.spec.js --project=chromium 
+      run: npx playwright test api.spec.js --project=chromium --reporter=json > result.json
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
@@ -26,10 +26,4 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - name: Report results to Google Sheets
-      env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
-          GITHUB_SHA: ${{ github.sha }}
       run: node scripts/report.js

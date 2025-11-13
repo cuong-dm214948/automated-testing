@@ -28,11 +28,11 @@ test( 'GET session token from API', async ( { page,request} ) => {
         }
     });
 
-    // Assertions
     expect(response1.status()).toBe(200);
     const body = await response1.json();
     console.log(body.result.redirect_uri);
     await page.goto(body.result.redirect_uri);
     await page.waitForLoadState('networkidle');
+    expect(response?.status()).toBe(200);
 
 })
