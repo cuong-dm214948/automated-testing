@@ -26,10 +26,10 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - name: Report results to Google Sheets
-        env:
+      env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
           GITHUB_SHA: ${{ github.sha }}
-        run: node scripts/report.js
+      run: node scripts/report.js
