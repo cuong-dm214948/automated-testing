@@ -1,39 +1,39 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/login.js";
 
-test("Login failed", async ({ page }) => {
-    test.setTimeout(120000);
-    const inputs = { phone: "0397825923", password: "1" }
+test("Login failed with incrorrect credentials", async ({ page }) => {
+    const { phone, password } = { phone: "0397825923", password: "1" }
     const loginPage = new LoginPage(page);
     await loginPage.goto();
+    await loginPage.login(phone, password);
+    try {
+      await loginPage.assertLoginError2();
+    } catch {
+      console.log("Login succeeded or no error visible.");
+    } 
+});
 
-    for (const { phone, password } of inputs) {
-      await loginPage.login(phone, password);
-      try {
-        await loginPage.assertLoginError();
-        console.log("Login failed (as expected).");
-      } catch {
-        console.log("Login succeeded or no error visible.");
-      }
-      await page.reload({ waitUntil: "domcontentloaded" });
+test("Login failed with not exist phone", async ({ page }) => {
+    const { phone, password } = { phone: "0397825921", password: "1" }
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login(phone, password);
+    try {
+      await loginPage.assertLoginError1();
+    } catch {
+      console.log("Login succeeded or no error visible.");
     }
 });
 
-test("Login attempts", async ({ page }) => {
-    test.setTimeout(120000);
-
-    const inputs = { phone: "0397825921", password: "1" }
+test("Login failed with incorrect phone ", async ({ page }) => {
+    const { phone, password } = { phone: "0297825921", password: "1" }
     const loginPage = new LoginPage(page);
     await loginPage.goto();
-
-    for (const { phone, password } of inputs) {
-      await loginPage.login(phone, password);
-      try {
-        await loginPage.assertLoginError();
-        console.log("Login failed (as expected).");
-      } catch {
-        console.log("Login succeeded or no error visible.");
-      }
-      await page.reload({ waitUntil: "domcontentloaded" });
+    await loginPage.login(phone, password);
+    try {
+      await loginPage.assertLoginError3();
+    } catch {
+      console.log("Login succeeded or no error visible.");
     }
 });
+

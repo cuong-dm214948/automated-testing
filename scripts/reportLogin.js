@@ -13,7 +13,7 @@ async function main() {
   const spreadsheetId = "1IVdSe8Gcal4gkLYMv-_MlVFKoiZqC73ukN6X8vFduKA";
 
   // Read Playwright JSON result
-  const jsonText = fs.readFileSync("result.json", "utf-8");
+  const jsonText = fs.readFileSync("resultLogin.json", "utf-8");
   const result = JSON.parse(jsonText);
 
   // 🧩 Playwright JSON reporters store tests under `suites`
@@ -37,7 +37,7 @@ async function main() {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet1!D2",
+    range: "Sheet2!D2",
     valueInputOption: "USER_ENTERED",
     resource: { values: rows },
   });

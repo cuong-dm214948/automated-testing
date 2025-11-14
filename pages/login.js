@@ -8,8 +8,9 @@ export class LoginPage {
     this.phoneInput = page.getByRole('textbox', { name: 'Số Điện Thoại' });
     this.passwordInput = page.getByRole('textbox', { name: 'Mật Khẩu' });
     this.loginButton = page.getByRole('button', { name: 'Đăng Nhập' });
-    this.errorMessage1 = page.locator('div.text-danger:has-text("Số điện thoại không tồn tại")');
+    this.errorMessage1 = page.locator('p.text-danger:has-text("Số điện thoại không tồn tại. Vui lòng đăng ký tài khoản.")');
     this.errorMessage2 = page.locator('p.text-danger:has-text("Tài khoản hoặc mật khẩu không đúng")');
+    this.errorMessage3 = page.locator('div.text-danger:has-text("Số Điện Thoại Không Hợp Lệ!")');
  }
 
   async goto() {
@@ -23,14 +24,19 @@ export class LoginPage {
     await this.loginButton.click();
     }
 
-
-  async assertLoginError() {
-
+  async assertLoginError1() {
+    
     const error1Visible = await this.errorMessage1.isVisible().catch(() => false);
-    const error2Visible = await this.errorMessage2.isVisible().catch(() => false);
-    console.log(" Error message 1 visible:", error1Visible);
-    console.log(" Error message 2 visible:", error2Visible);
-    expect(error1Visible || error2Visible).toBeTruthy();
+    expect(error1Visible).toBeTruthy();
+  }
 
+  async assertLoginError2() {
+      const error2Visible = await this.errorMessage2.isVisible().catch(() => false);
+      expect(error2Visible).toBeTruthy();
+  }
+
+    async assertLoginError3() {
+      const error3Visible = await this.errorMessage3.isVisible().catch(() => false);
+      expect(error3Visible).toBeTruthy();
   }
 }
