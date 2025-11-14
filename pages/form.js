@@ -1,6 +1,5 @@
-import { expect } from '@playwright/test';
-
 export class LoginPage {
+    
   constructor(page) {
     this.page = page;
     this.closeButton = page.locator("a[data-dismiss='modal']");
