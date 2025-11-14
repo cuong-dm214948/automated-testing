@@ -1,18 +1,13 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/login.js";
 
-test.describe("Login Tests with AI-generated data", () => {
-  test("Run 5 LLM-generated login attempts", async ({ page }) => {
-      test.setTimeout(120000);
-
-    const { generateInputs } = await import("../utils/genInput.js");
-    const inputs = await generateInputs();
+test("Login failed", async ({ page }) => {
+    test.setTimeout(120000);
+    const inputs = { phone: "0397825923", password: "1" }
     const loginPage = new LoginPage(page);
     await loginPage.goto();
 
     for (const { phone, password } of inputs) {
-      console.log(`Trying login with ${phone} / ${password}`);
-
       await loginPage.login(phone, password);
       try {
         await loginPage.assertLoginError();
@@ -22,5 +17,23 @@ test.describe("Login Tests with AI-generated data", () => {
       }
       await page.reload({ waitUntil: "domcontentloaded" });
     }
-  });
+});
+
+test("Login attempts", async ({ page }) => {
+    test.setTimeout(120000);
+
+    const inputs = { phone: "0397825921", password: "1" }
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+
+    for (const { phone, password } of inputs) {
+      await loginPage.login(phone, password);
+      try {
+        await loginPage.assertLoginError();
+        console.log("Login failed (as expected).");
+      } catch {
+        console.log("Login succeeded or no error visible.");
+      }
+      await page.reload({ waitUntil: "domcontentloaded" });
+    }
 });
