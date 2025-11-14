@@ -33,7 +33,7 @@ async function main() {
   collectTests(result);
 
   // Prepare rows
-  const rows = allTests.map(t => [t.title, t.status, t.duration, new Date().toLocaleString()]);
+  const rows = allTests.map(t => [t.title, t.status, t.duration, new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })]);
   console.log("Parsed tests:", rows);
 
   // Append to Google Sheets
@@ -44,9 +44,9 @@ async function main() {
     resource: { values: rows },
   });
 
-  console.log("✅ Results successfully appended to Google Sheets!");
+  console.log("Results successfully appended to Google Sheets!");
 }
 
 main().catch(err => {
-  console.error("❌ Error in report.js:", err);
+  console.error("Error in report.js:", err);
 });
