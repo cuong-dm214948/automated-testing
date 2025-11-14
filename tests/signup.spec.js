@@ -4,7 +4,6 @@ import { SignupPage } from "../pages/signup.js";
 test.setTimeout(120000);
 
 test("signup", async ({ page }) => {
-  page.setDefaultTimeout(35000);
 
   const { generateInputs } = await import("../utils/genSignup.js");
 
