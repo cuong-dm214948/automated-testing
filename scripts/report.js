@@ -34,12 +34,10 @@ async function main() {
 
   // Prepare rows
   const rows = allTests.map(t => [t.title, t.status, t.duration, new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })]);
-  console.log("Parsed tests:", rows);
 
-  // Append to Google Sheets
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet1!D:G",
+    range: "Sheet1!D",
     valueInputOption: "USER_ENTERED",
     resource: { values: rows },
   });
