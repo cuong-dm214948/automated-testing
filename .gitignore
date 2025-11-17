@@ -1,4 +1,3 @@
 node_modules/
 /playwright/.cache/
 .github/
-scripts/credentials.json
