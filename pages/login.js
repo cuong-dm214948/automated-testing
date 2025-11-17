@@ -14,29 +14,27 @@ export class LoginPage {
  }
 
   async goto() {
-    await this.page.goto('https://dominos.vn/');
+    await this.page.goto('https://dominos.vn/', {
+    waitUntil: 'domcontentloaded'
+  });
   }
   async login(phone, password) {
-    await this.closeButton.click();;
+    //await this.closeButton.click();;
     await this.userProfileLink.click();
     await this.phoneInput.fill(phone);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
     }
 
-  async assertLoginError1() {
-    
-    const error1Visible = await this.errorMessage1.isVisible().catch(() => false);
-    expect(error1Visible).toBeTruthy();
+  async assertLoginError1() { 
+    await expect(this.errorMessage1).toBeVisible({ timeout: 10000 });
   }
 
   async assertLoginError2() {
-      const error2Visible = await this.errorMessage2.isVisible().catch(() => false);
-      expect(error2Visible).toBeTruthy();
+    await expect(this.errorMessage2).toBeVisible({ timeout: 10000 });
   }
 
-    async assertLoginError3() {
-      const error3Visible = await this.errorMessage3.isVisible().catch(() => false);
-      expect(error3Visible).toBeTruthy();
+  async assertLoginError3() {
+    await expect(this.errorMessage3).toBeVisible({ timeout: 10000 });
   }
 }
