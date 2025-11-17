@@ -4,17 +4,16 @@ export class LoginPage {
   constructor(page) {
     this.page = page;
     this.closeButton = page.locator("a[data-dismiss='modal']");
-    this.userProfileLink = page.locator('i.icon-user');
-    this.phoneInput = page.getByRole('textbox', { name: 'Số Điện Thoại' });
-    this.passwordInput = page.getByRole('textbox', { name: 'Mật Khẩu' });
+    this.userProfileLink = page.getByRole('button', { name: 'Đăng Nhập' });
+    this.phoneInput = page.locator('id=username');
+    this.passwordInput = page.locator('id=password');
     this.loginButton = page.getByRole('button', { name: 'Đăng Nhập' });
-    this.errorMessage1 = page.locator('p.text-danger:has-text("Số điện thoại không tồn tại. Vui lòng đăng ký tài khoản.")');
-    this.errorMessage2 = page.locator('p.text-danger:has-text("Tài khoản hoặc mật khẩu không đúng")');
-    this.errorMessage3 = page.locator('div.text-danger:has-text("Số Điện Thoại Không Hợp Lệ!")');
+    this.errorMessage1 = page.locator('p.text-xs:has-text("Thông tin đăng nhập không chính xác")');
+    this.errorMessage2 = page.locator('p.text-xs:has-text("Email hoặc số điện thoại không đúng định dạng")');
  }
 
   async goto() {
-    await this.page.goto('https://dominos.vn/', {
+    await this.page.goto('https://vbee.vn/', {
     waitUntil: 'domcontentloaded'
   });
   }
@@ -29,16 +28,11 @@ export class LoginPage {
 
   async assertLoginError1() { 
     await expect(this.errorMessage1).toBeVisible({ timeout: 10000 });
-    console.log("Login failed as expected with non-existent phone.");
+    console.log("Login failed as expected with incorrect credentials");
   }
 
   async assertLoginError2() {
-    await expect(this.errorMessage2).toBeVisible({ timeout: 10000 });
-    console.log("Login failed as expected with incorrect credentials.");
-  }
-
-  async assertLoginError3() {
-    await expect(this.errorMessage3).toBeVisible({ timeout: 10000 });
+    await expect(this.errorMessage2).toBeVisible({ timeout: 20000 });
     console.log("Login failed as expected with incorrect phone format.");
   }
 }

@@ -2,38 +2,17 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/login.js";
 
 test("Login failed with incrorrect credentials", async ({ page }) => {
-    const { phone, password } = { phone: "0397825921", password: "1" }
+    const { phone, password } = { phone: "cuong.dm214948@sis.hust.edu.vn", password: "2" }
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.login(phone, password);
-    try {
-      await loginPage.assertLoginError1();
-    } catch {
-      console.log("Login succeeded or no error visible.");
-    } 
+    await loginPage.assertLoginError1();
 });
 
-test("Login failed with not exist phone", async ({ page }) => {
-    const { phone, password } = { phone: "0397825923", password: "1" }
+test("Login passed", async ({ page }) => {
+    const { phone, password } = { phone: "cuong.dm214948@sis.hust.edu.vn", password: "1" }
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.login(phone, password);
-    try {
-      await loginPage.assertLoginError2();
-    } catch {
-      console.log("Login succeeded or no error visible.");
-    }
+    await expect(page).toHaveURL(/studio\/text-to-speech/);
 });
-
-test("Login failed with incorrect phone ", async ({ page }) => {
-    const { phone, password } = { phone: "0297825921", password: "1" }
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.login(phone, password);
-    try {
-      await loginPage.assertLoginError3();
-    } catch {
-      console.log("Login succeeded or no error visible.");
-    }
-});
-
