@@ -36,7 +36,7 @@ async function main() {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet2!D2",
+    range: "Sheet2!D:G",
     valueInputOption: "USER_ENTERED",
     resource: { values: rows },
   });
