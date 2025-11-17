@@ -1,4 +1,4 @@
-name: Playwright Tests to Google Sheets
+name: Automated Tests
 
 on:
   push:
@@ -26,25 +26,25 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright test form
+      - name: Run test form
         run: npx playwright test form.spec.js --project=chromium --reporter=json > resultForm.json
 
-      - name: Run Playwright test login
+      - name: Run test login
         run: npx playwright test login.spec.js --project=chromium --reporter=json > resultLogin.json
 
-      - name: Upload Playwright form report
+      - name: Upload form report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-form-report
+          name: form-report
           path: resultForm.json
           retention-days: 30
 
-      - name: Upload Playwright login report
+      - name: Upload login report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-login-report
+          name: login-report
           path: resultLogin.json
           retention-days: 30
 

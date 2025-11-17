@@ -46,5 +46,5 @@ async function main() {
 }
 
 main().catch(err => {
-  console.error("Error in report.js:", err);
+  console.error("Error in reportForm.js:", err);
 });
