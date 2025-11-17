@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  security test:
+  security-test:
     name: "Security Testing"
     runs-on: ubuntu-latest
     steps:
