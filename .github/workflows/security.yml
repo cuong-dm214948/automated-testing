@@ -1,9 +1,8 @@
 name: Security Tests
 
 on:
-  workflow_dispatch:        # ← allow manual run
+  workflow_dispatch:
   schedule:
-    # Runs every day at 02:00 UTC
     - cron: '0 2 * * *'
 
 jobs:
@@ -16,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.6.0  # update to latest
+        uses: zaproxy/action-baseline@v0.6.0
         with:
           target: 'https://vbee.vn/'
           rules_file_name: '.zap/rules.tsv'
