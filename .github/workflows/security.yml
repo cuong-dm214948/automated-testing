@@ -1,22 +1,31 @@
-name: Security Tests
+name: "ZAP API Scan CI workflow"
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
   schedule:
-    - cron: '0 2 * * *'
+      - cron:  '0 0 1 * *' ##execution of a task in the first minute of the month 
+
 
 jobs:
-  zap_scan:
+  security test:
+    name: "Security Testing"
     runs-on: ubuntu-latest
-    name: Scan ZAP website
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.6.0
+      - name: "ZAP API Scan"
+        uses: zaproxy/action-api-scan@v0.1.0
         with:
-          target: 'https://vbee.vn/'
+          target: 'http://vbee.vn'    
+
+  advanced-job:
+    name: "advanced - Security Testing"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "ZAP API Scan"
+        uses: zaproxy/action-api-scan@v0.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'owasp/zap2docker-stable'
+          target: 'http://vbee.vn'
           rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a'
+          cmd_options: '-a' 
