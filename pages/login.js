@@ -24,17 +24,21 @@ export class LoginPage {
     await this.phoneInput.fill(phone);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
+    console.log(`Attempted login with phone: ${phone} and password: ${password}`);
     }
 
   async assertLoginError1() { 
     await expect(this.errorMessage1).toBeVisible({ timeout: 10000 });
+    console.log("Login failed as expected with non-existent phone.");
   }
 
   async assertLoginError2() {
     await expect(this.errorMessage2).toBeVisible({ timeout: 10000 });
+    console.log("Login failed as expected with incorrect credentials.");
   }
 
   async assertLoginError3() {
     await expect(this.errorMessage3).toBeVisible({ timeout: 10000 });
+    console.log("Login failed as expected with incorrect phone format.");
   }
 }
