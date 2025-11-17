@@ -2,7 +2,6 @@ const fs = require("fs");
 const { google } = require("googleapis");
 
 async function main() {
-  // Authenticate with Google Sheets
   const auth = new google.auth.GoogleAuth({
     keyFile: "./scripts/credentials.json",
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
@@ -12,12 +11,9 @@ async function main() {
 
   const spreadsheetId = "1IVdSe8Gcal4gkLYMv-_MlVFKoiZqC73ukN6X8vFduKA";
 
-  // Read Playwright JSON result
   const jsonText = fs.readFileSync("resultForm.json", "utf-8");
   const result = JSON.parse(jsonText);
 
-  // 🧩 Playwright JSON reporters store tests under `suites`
-  // Let's flatten all test entries from nested suites
   const allTests = [];
   function collectTests(suite) {
     if (suite.suites) suite.suites.forEach(collectTests);
@@ -32,7 +28,6 @@ async function main() {
   }
   collectTests(result);
 
-  // Prepare rows
   const rows = allTests.map(t => [t.title, t.status, t.duration, new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })]);
 
   await sheets.spreadsheets.values.append({
