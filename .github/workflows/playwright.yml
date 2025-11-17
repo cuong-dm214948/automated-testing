@@ -54,4 +54,7 @@ jobs:
           echo '${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}' > scripts/credentials.json
 
       - name: Report results to Google Sheets
-        run: node scripts/report.js
+        run: node scripts/reportForm.js
+      
+      - name: Report results to Google Sheets
+        run: node scripts/reportLogin.js

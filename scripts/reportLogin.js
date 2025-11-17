@@ -32,7 +32,6 @@ async function main() {
   }
   collectTests(result);
 
-  // Prepare rows
   const rows = allTests.map(t => [t.title, t.status, t.duration, new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })]);
 
   await sheets.spreadsheets.values.append({
