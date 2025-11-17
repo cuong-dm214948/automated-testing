@@ -3,7 +3,7 @@ name: Security Tests
 on:
   schedule:
     # Runs every day At 01:00.
-    - cron:  '0 1 * * *'
+    - cron:  '0 2 * * *'
 
 jobs:
   zap_scan:
