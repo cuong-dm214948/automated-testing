@@ -16,6 +16,7 @@ jobs:
         uses: zaproxy/action-full-scan@v0.13.0
         with:
           target: "https://dominos.vn/"
+          allow_issue_writing: false
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
