@@ -1,20 +1,59 @@
-name: ZAP Scan
+name: OWASP ZAP Scan
 
 on:
   push:
-    branches: main
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  scans:
+  build-and-scan:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Log current directory
-        run: echo ${pwd}
-      - name: Pull ZAP OWASP Image
-        run: docker pull owasp/zap2docker-weekly
-      - name: Run ZAP API Scan
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
         run: |
-          sudo docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t openapi.json -f openapi -c api-scan.conf
-        # run: sudo docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t dev-wiki-api.json -f openapi -r test_report_$(date -u +'%Y%m%d').html
+          cd app
+          docker build -t dast-automation-web .
+
+      - name: Run Flask app in Docker
+        run: |
+          cd app
+          docker network create zap-network
+          docker run -d --network zap-network --name dast-automation-web dast-automation-web
+          sleep 30  # Wait for the application to be ready
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: cuong
+          DOCKER_PASSWORD: 1
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+      - name: Pull OWASP ZAP Docker image
+        run: docker pull ictu/zap2docker-weekly
+
+      - name: Start OWASP ZAP scan
+        run: |
+          sudo chmod -R 777 $(pwd)  # Ensure the directory has the correct permissions
+          docker run --network zap-network -v $(pwd):/zap/wrk/:rw -t ictu/zap2docker-weekly zap-baseline.py -t http://dast-automation-web:8080 -r zap_report.html || true
+
+      - name: Stop Docker container
+        run: |
+          docker stop dast-automation-web
+          docker rm dast-automation-web
+          docker network rm zap-network
+
+      - name: Upload ZAP report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap_report.html
