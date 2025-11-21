@@ -26,7 +26,7 @@ test("Form", async ({ page }) => {
     await page.getByText('Sports').click();
     await page.getByText('Reading').click();
     await page.getByText('Music').click();
-    await page.locator('id=uploadPicture').setInputFiles('tests/example.spec.js');
+    await page.locator('id=uploadPicture').setInputFiles('tests/api.spec.js');
     await page.getByRole('textbox', { name: 'Current Address'}).click();
     await page.getByRole('textbox', { name: 'Current Address'}).fill('Hanoi');
     await page.locator('#state').click();
