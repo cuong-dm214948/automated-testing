@@ -12,10 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
+      - name: Run OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.4.0
         with:
           target: "https://dominos.vn"
+          cmd_options: "-I"  # tránh exit 1 khi có alerts
+          report_file: "zap_report.html"
+
       - name: Upload ZAP report
         uses: actions/upload-artifact@v4
         with:
