@@ -10,13 +10,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run OWASP ZAP Full Scan
-        uses: zaproxy/action-full-scan@v0.5.0
+        uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: "https://dominos.vn"
-          cmd_options: "-I"
+          target: "https://dominos.vn/"
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
