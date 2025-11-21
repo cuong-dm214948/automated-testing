@@ -24,3 +24,12 @@ jobs:
         with:
           name: zap-report
           path: report_html.html
+
+      
+      - name: Write Google credentials
+        run: |
+          mkdir -p scripts
+          echo '${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}' > scripts/credentials.json
+
+      - name: Report results to Google Sheets
+        run: node scripts/reportZap.js
