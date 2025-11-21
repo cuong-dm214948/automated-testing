@@ -7,4 +7,3 @@
 10027	IGNORE	(Information Disclosure - Suspicious Comments)
 90022	IGNORE	(Application Error Disclosure)
 10023	IGNORE	(Information Disclosure - Debug Error Messages)
-2	IGNORE	(Private IP Disclosure)
