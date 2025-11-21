@@ -32,11 +32,9 @@ jobs:
           sleep 30  # Wait for the application to be ready
 
       - name: Log in to Docker Hub
-        env:
-          DOCKER_USERNAME: cuong
-          DOCKER_PASSWORD: 1
+
         run: |
-          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          echo "1" | docker login -u "cuong" --password-stdin
 
       - name: Pull OWASP ZAP Docker image
         run: docker pull ictu/zap2docker-weekly
