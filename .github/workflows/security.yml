@@ -20,7 +20,7 @@ jobs:
         with:
           target: "https://dominos.vn/"
           spider: true
-          cmd_options: "-j"
+          cmd_options: "-j -m 2"
           allow_issue_writing: false
 
       - name: Upload ZAP Report

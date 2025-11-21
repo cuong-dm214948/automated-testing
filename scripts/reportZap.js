@@ -9,21 +9,24 @@ async function uploadZAPReport() {
   });
 
   const sheets = google.sheets({ version: "v4", auth });
+  const data = JSON.parse(fs.readFileSync("report_json.json", "utf8"));
 
-  // Load ZAP JSON report
-  const report = JSON.parse(fs.readFileSync("report_json.json", "utf8"));
+  const rows = [];
 
-  // Extract relevant info (alerts)
-  const rows = report.site.flatMap(site =>
-    site.alerts.map(alert => [
-      site.name,
-      alert.name,
-      alert.risk,
-      alert.url,
-      alert.param,
-      alert.evidence,
-    ])
-  );
+  data.site.forEach(site => {
+    site.alerts.forEach(alert => {
+        alert.instances.forEach(instance => {
+        rows.push({
+            alertName: alert.name,
+            risk: alert.riskdesc,
+            url: instance.uri,
+            method: instance.method,
+            description: alert.desc,
+            solution: alert.solution
+        });
+        });
+    });
+  });
 
   const spreadsheetId = "1IVdSe8Gcal4gkLYMv-_MlVFKoiZqC73ukN6X8vFduKA";
   const range = "Zap!A1";
