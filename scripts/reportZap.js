@@ -4,38 +4,45 @@ const { google } = require("googleapis");
 async function uploadZAPReport() {
   // Load your service account credentials
   const auth = new google.auth.GoogleAuth({
-    keyFile: "./scripts/credentials.json",
+    keyFile: "credentials.json",
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
 
   const sheets = google.sheets({ version: "v4", auth });
-  const data = JSON.parse(fs.readFileSync("report_json.json", "utf8"));
+  const zapReport = JSON.parse(fs.readFileSync("report_json.json", "utf8"));
 
-  const rows = [];
+  const data = [
+    ['Program Name', zapReport['@programName'] || ''],
+    ['Version', zapReport['@version'] || ''],
+    ['Generated', zapReport['@generated'] || ''],
+    ['Site Name', zapReport.site?.[0]['@name'] || ''],
+    ['Port', zapReport.site?.[0]['@port'] || '']
+  ];
 
-  data.site.forEach(site => {
-    site.alerts.forEach(alert => {
-        alert.instances.forEach(instance => {
-        rows.push({
-            alertName: alert.name,
-            risk: alert.riskdesc,
-            url: instance.uri,
-            method: instance.method,
-            description: alert.desc,
-            solution: alert.solution
-        });
-        });
-    });
-  });
+   const alertData = zapReport.site?.[0]?.alerts?.map(alert => {
+    const instance = alert.instances?.[0] || {};
+    return [
+      alert.name || '',
+      alert.riskdesc || '',
+      instance.uri || '',
+      instance.method || ''
+    ];
+  }) || [];
 
   const spreadsheetId = "1IVdSe8Gcal4gkLYMv-_MlVFKoiZqC73ukN6X8vFduKA";
-  const range = "Zap!A1";
 
-  await sheets.spreadsheets.values.append({
+  await sheets.spreadsheets.values.update({
     spreadsheetId,
-    range,
+    range: "Zap!A2:B6",
     valueInputOption: "RAW",
-    resource: { values: rows },
+    resource: { values: data },
+  });
+
+    await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: "Zap!D1",
+    valueInputOption: "RAW",
+    resource: { values: alertData },
   });
 
   console.log("Report uploaded to Google Sheets successfully!");
