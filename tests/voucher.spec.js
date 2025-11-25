@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/homePage.js';
 
 test('voucher test', async ({ page }) => {
-  const homePage = new HomePage(page);
-  await homePage.goto();
-  await homePage.voucher();
-  //await expect(page.url()).toBe('https://dominos.vn/voucher-default');
-  await page.getByRole('textbox', { name: 'Nhập Mã E-voucher' }).click();
-  await page.getByRole('textbox', { name: 'Nhập Mã E-voucher' }).fill('');
-  await page.getByRole('button', { name: 'Áp Dụng' }).click();
-  expect(page.getByText('Some things went wrong').isVisible()).toBeTruthy();
+//   const homePage = new HomePage(page);
+//   await homePage.goto();
+//   await homePage.voucher();
+//   //await expect(page.url()).toBe('https://dominos.vn/voucher-default');
+//   await page.getByRole('textbox', { name: 'Nhập Mã E-voucher' }).click();
+//   await page.getByRole('textbox', { name: 'Nhập Mã E-voucher' }).fill('');
+//   await page.getByRole('button', { name: 'Áp Dụng' }).click();
+//   expect(page.getByText('Some things went wrong').isVisible()).toBeTruthy();
   const homePage1 = new HomePage(page);
   await homePage1.goto();
   await homePage1.voucher();

@@ -40,7 +40,7 @@ async function uploadZAPReport() {
 
     await sheets.spreadsheets.values.update({
     spreadsheetId,
-    range: "Zap!D1",
+    range: "Zap!D2",
     valueInputOption: "RAW",
     resource: { values: alertData },
   });

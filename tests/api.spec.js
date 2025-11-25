@@ -188,6 +188,19 @@ test("Check voucher code", async ({ request }) => {
   console.log(json);
 });
 
+test(`GET promotion`, async ({ request }) => {
+    const res = await request.get(`https://dominos.vn/api/v1/promotions?promotion-code=D70PIZ10`);
+    expect(res.status()).toBe(200);
+
+    const body = await res.json();
+    console.log(`promotion`, body);
+});
+
+test("Check orer tracking", async ({ request }) => {
+  const response = await request.post(`https://dominos.vn/api/v1/Orders/token?customer-info.phone=&customerPhone=&fields=checkindate&fields=OrderDetails&fields=payments&id=&token-id=0397825923`);
+  const json = await response.json();
+  console.log(json);
+});
 
 
 
